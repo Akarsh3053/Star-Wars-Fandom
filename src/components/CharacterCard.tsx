@@ -1,32 +1,34 @@
-import { Box, Text, Button } from '@chakra-ui/react';
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
+'use client'
+
+import { Box, Text, Button } from '@chakra-ui/react'
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
 
 interface CharacterCardProps {
-    name: string;
-    url: string;
+    name: string
+    url: string
 }
 
 export const CharacterCard: React.FC<CharacterCardProps> = ({ name, url }) => {
-    const [isFavorite, setIsFavorite] = useState(false);
-    const id = url.split('/').slice(-2, -1)[0];
+    const [isFavorite, setIsFavorite] = useState(false)
+    const id = url.split('/').slice(-2, -1)[0]
 
     useEffect(() => {
-        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-        setIsFavorite(favorites.includes(id));
-    }, [id]);
+        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
+        setIsFavorite(favorites.includes(id))
+    }, [id])
 
     const toggleFavorite = () => {
-        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
         if (isFavorite) {
-            const newFavorites = favorites.filter((fav: string) => fav !== id);
-            localStorage.setItem('favorites', JSON.stringify(newFavorites));
+            const newFavorites = favorites.filter((fav: string) => fav !== id)
+            localStorage.setItem('favorites', JSON.stringify(newFavorites))
         } else {
-            favorites.push(id);
-            localStorage.setItem('favorites', JSON.stringify(favorites));
+            favorites.push(id)
+            localStorage.setItem('favorites', JSON.stringify(favorites))
         }
-        setIsFavorite(!isFavorite);
-    };
+        setIsFavorite(!isFavorite)
+    }
 
     return (
         <Box borderWidth="1px" borderRadius="lg" p={4} mb={4}>
@@ -34,7 +36,7 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ name, url }) => {
                 {name}
             </Text>
             <Link href={`/character/${id}`} passHref>
-                <Button colorScheme="blue" mr={2}>
+                <Button as="a" colorScheme="blue" mr={2}>
                     View Details
                 </Button>
             </Link>
@@ -42,5 +44,5 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ name, url }) => {
                 {isFavorite ? 'Unfavorite' : 'Favorite'}
             </Button>
         </Box>
-    );
-};
+    )
+}

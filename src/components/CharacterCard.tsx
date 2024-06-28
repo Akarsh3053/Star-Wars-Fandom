@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Text, Button, IconButton } from '@chakra-ui/react'
+import { Box, Text, Button, IconButton, Image, Flex } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { FaHeart, FaRegHeart } from 'react-icons/fa'
@@ -32,28 +32,34 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ name, url }) => {
     }
 
     return (
-        <Box borderWidth="1px" borderRadius="lg" p={4} mb={4}>
-            <Text fontSize="xl" fontWeight="bold" mb={2}>
-                {name}
-            </Text>
-            <Box display="flex" alignItems="center">
-                <Link href={`/character/${id}`} passHref>
-                    <Button as="a" colorScheme="blue" mr={2}>
-                        View Details
-                    </Button>
-                </Link>
-                <IconButton
-                    aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
-                    icon={isFavorite ? <FaHeart /> : <FaRegHeart />}
-                    onClick={toggleFavorite}
-                    colorScheme={isFavorite ? "red" : "gray"}
-                    variant="outline"
-                    transition="all 0.2s"
-                    _hover={{
-                        transform: 'scale(1.1)',
-                    }}
+        <Box borderWidth="1px" borderRadius="lg" p={4} mb={4} boxShadow="md">
+            <Flex direction="column" align="center">
+                <Image
+                    src={`/characters/${id}.webp`}
+                    alt={name}
+                    borderRadius="full"
+                    boxSize="100px"
+                    objectFit="scale-down"
+                    mb={4}
                 />
-            </Box>
+                <Text fontSize="xl" fontWeight="bold" mb={2} textAlign="center">
+                    {name}
+                </Text>
+                <Flex>
+                    <Link href={`/character/${id}`} passHref>
+                        <Button as="a" colorScheme="blue" mr={2}>
+                            View Details
+                        </Button>
+                    </Link>
+                    <IconButton
+                        aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+                        icon={isFavorite ? <FaHeart /> : <FaRegHeart />}
+                        onClick={toggleFavorite}
+                        colorScheme={isFavorite ? "red" : "gray"}
+                        variant="outline"
+                    />
+                </Flex>
+            </Flex>
         </Box>
     )
 }

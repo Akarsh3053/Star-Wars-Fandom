@@ -1,10 +1,9 @@
 'use client'
 
-import Link from 'next/link'
-import { useState, useEffect } from 'react'
-import { useSearchParams } from 'next/navigation'
-import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import { Box, Text, Button, IconButton, Image, Flex } from '@chakra-ui/react'
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { FaHeart, FaRegHeart } from 'react-icons/fa'
 
 interface CharacterCardProps {
     name: string
@@ -12,9 +11,6 @@ interface CharacterCardProps {
 }
 
 export const CharacterCard: React.FC<CharacterCardProps> = ({ name, url }) => {
-    const searchParams = useSearchParams()
-    const currentPage = searchParams.get('page') || '1'
-
     const [isFavorite, setIsFavorite] = useState(false)
     const id = url.split('/').slice(-2, -1)[0]
 
@@ -36,7 +32,7 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ name, url }) => {
     }
 
     return (
-        <Box borderWidth="1px" borderRadius="lg" p={4} mb={4} boxShadow="md">
+        <Box borderColor="blueviolet" borderWidth="1px" borderRadius="lg" p={4} mb={4} boxShadow="md">
             <Flex direction="column" align="center">
                 <Image
                     src={`/characters/${id}.webp`}
@@ -50,7 +46,7 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ name, url }) => {
                     {name}
                 </Text>
                 <Flex>
-                    <Link href={`/character/${id}`} passHref scroll={false}>
+                    <Link href={`/character/${id}`} passHref>
                         <Button as="a" colorScheme="blue" mr={2}>
                             View Details
                         </Button>

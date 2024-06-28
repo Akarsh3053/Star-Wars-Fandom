@@ -1,9 +1,10 @@
 'use client'
 
-import { Box, Text, Button, IconButton, Image, Flex } from '@chakra-ui/react'
-import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { FaHeart, FaRegHeart } from 'react-icons/fa'
+import { Box, Text, Button, IconButton, Image, Flex } from '@chakra-ui/react'
 
 interface CharacterCardProps {
     name: string
@@ -11,6 +12,9 @@ interface CharacterCardProps {
 }
 
 export const CharacterCard: React.FC<CharacterCardProps> = ({ name, url }) => {
+    const searchParams = useSearchParams()
+    const currentPage = searchParams.get('page') || '1'
+
     const [isFavorite, setIsFavorite] = useState(false)
     const id = url.split('/').slice(-2, -1)[0]
 
@@ -39,14 +43,14 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ name, url }) => {
                     alt={name}
                     borderRadius="full"
                     boxSize="100px"
-                    objectFit="scale-down"
+                    objectFit="fill"
                     mb={4}
                 />
                 <Text fontSize="xl" fontWeight="bold" mb={2} textAlign="center">
                     {name}
                 </Text>
                 <Flex>
-                    <Link href={`/character/${id}`} passHref>
+                    <Link href={`/character/${id}`} passHref scroll={false}>
                         <Button as="a" colorScheme="blue" mr={2}>
                             View Details
                         </Button>

@@ -13,13 +13,18 @@ import {
     Divider,
     Card,
     CardBody,
-    Stack
+    Stack,
+    Button
 } from '@chakra-ui/react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { getCharacterDetails, getMovieDetails } from '../../../utils/api'
 
 export default function CharacterDetail({ params }: { params: { id: string } }) {
     const [character, setCharacter] = useState<any>(null)
     const [movies, setMovies] = useState<string[]>([])
+    const router = useRouter()
+    const searchParams = useSearchParams()
+    const backPage = searchParams.get('back') || '1'
 
     useEffect(() => {
         if (params.id) {
@@ -43,12 +48,17 @@ export default function CharacterDetail({ params }: { params: { id: string } }) 
         setMovies(movieTitles)
     }
 
+    const handleBackClick = () => {
+        router.push(`/?page=${backPage}`)
+    }
+
     if (!character) {
         return <Container maxW="container.xl" py={8}>Loading...</Container>
     }
 
     return (
         <Container maxW="container.xl" py={8}>
+            <Button onClick={handleBackClick} mb={4}>Back to List</Button>
             <Card
                 direction={{ base: 'column', sm: 'row' }}
                 overflow='hidden'
